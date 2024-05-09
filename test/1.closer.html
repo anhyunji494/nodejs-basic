@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>클로저의 개념</title>
+  </head>
+  <body>
+    <script>
+      function outer() {
+        var a = "a";
+        var b = "b";
+
+        function inner() {
+          var a = "aa";
+          console.log(b);
+        }
+        return inner;
+      }
+
+      var outerFunc = outer();
+      outerFunc();
+    </script>
+  </body>
+</html>
