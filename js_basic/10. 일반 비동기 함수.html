@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>일반 비동기 함수</title>
+  </head>
+  <body>
+    <script>
+      function work(sec, callback) {
+        setTimeout(() => {
+          callback(new Date().toISOString());
+        }, sec * 1000);
+      }
+
+      work(1, (result) => {
+        console.log("첫번째 작업", result);
+      });
+
+      work(1, (result) => {
+        console.log("두번째 작업", result);
+      });
+
+      work(1, (result) => {
+        console.log("세번째 작업", result);
+      });
+
+      // 결과
+      // 첫번째 작업 2024-05-09T04:25:57.523Z
+      // 두번째 작업 2024-05-09T04:25:57.524Z
+      // 세번째 작업 2024-05-09T04:25:57.524Z
+
+      // 1, 2, 3 작업 모두 같은 시간에 끝남
+      // 1 => 2 => 3 순서대로 작업 한다면 1번 작업이 끝난 후, 1초 뒤에 2번 작업이 끝나고, 또 1초 뒤 3번 작업이 끝나야 함
+
+      // 동기적 처리
+
+      console.log("동기적 처리 (1)");
+
+      function work1(sec, callback) {
+        setTimeout(() => {
+          callback(new Date().toISOString());
+        }, sec * 1000);
+      }
+
+      work1(1, (result) => {
+        console.log("첫번째 작업", result);
+        work1(1, (result) => {
+          console.log("두번째 작업", result);
+
+          work1(1, (result) => {
+            console.log("세번째 작업", result);
+          });
+        });
+      });
+
+      // 동기적 처리(1)의 결과
+      // 첫번째 작업 2024-05-09T04:30:07.314Z
+      // 두번째 작업 2024-05-09T04:30:08.326Z
+      // 세번째 작업 2024-05-09T04:30:09.341Z
+
+      // 정리 : 1=>2=>3 순서대로 작업을 하고 싶다면 비동기적 처리를 위한 코드를 짜야 함
+      // 동기적처리 (1)처럼 콜백 함수 안에 콜백 함수를 넣으면 1=>2=>3 순서대로 작업을 할 수 있음
+
+      console.log("동기적 처리(2)");
+
+      function work2(sec, callback) {
+        setTimeout(() => {
+          callback(new Date().toISOString());
+        }, sec * 1000);
+      }
+
+      work2(1, (result) => {
+        console.log("첫번째 작업", result);
+
+        work2(1, (result) => {
+          work2(1, (result) => {
+            console.log("세번째 작업", result);
+          });
+
+          console.log("두번째 작업", result);
+        });
+      });
+
+      // 동기적 처리 (2) 결과
+      // 첫번째 작업 2024-05-09T04:34:53.800Z
+      // 두번째 작업 2024-05-09T04:34:54.803Z
+      // 세번째 작업 2024-05-09T04:34:55.817Z
+
+      // 눈으로 위에서 아래로 볼 때는 1=>3=>2 이지만, 비동기적으로 동작하기 때문에 1=>2=>3 순서로 실행 됨
+      // 눈으로 코드를 보면서 로직을 바꿀 대 어떻게 해야 하는지, 결과가 어떻게 될지, 확인하기 어려워짐
+      // 이를 위해 사용하는 것이 Promise 객체 => 콜백 지옥을 탈출하게 해주는 자바스크립트 API!
+    </script>
+  </body>
+</html>

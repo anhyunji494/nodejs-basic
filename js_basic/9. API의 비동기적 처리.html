@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API의 비동기적 처리</title>
+  </head>
+  <body>
+    <script>
+      console.log(0);
+
+      setTimeout(function () {
+        console.log("Hello");
+      }, 0);
+
+      console.log(1);
+
+      // setTimeout()은 웹 브라우저에서 제공하는 API
+      // setTimeout() 함수는 인자로 콜백 함수와 얼마나 dalay 할건지 넘겨줌
+      // dealy를 0초로 주었는데도 0,1,Hello 순서대로 처리됨
+      // setTimeout()에 인자로 넘겨준 console.log('Hello')가 비동기적으로 처리된다는 뜻
+      // 콜 스택에 있는 작업이 모두 끝난 뒤, 이벤트 루프가 콜백 큐에 있는 setTimeout 작업을 살펴보고 작업을 콜스택에 올려 실행 => '콜백은 나중에 실행하라'
+
+      // 정리
+      // 자바스크립트 내부에서 처리되는 연산 ex. 사용자 정의 함수 => 동기적 처리
+      // 자바스크립트 외부에서 처리되는 연산 ex. setTimeout() => 비동기적 처리 => 서버에서 데이터 가져오기, 타이머 등 외부 API 등
+
+      // * 콜백지옥?
+      // 비동기 처리 방식으로 코딩할 때 콜백 함수 안에 또 다른 콜백 함수를 계속 넣어 코딩 => 이때 로직 변경이 어렵고 다고성이 떨어지는 코드 구조
+    </script>
+  </body>
+</html>

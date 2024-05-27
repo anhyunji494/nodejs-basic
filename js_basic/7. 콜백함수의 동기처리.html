@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>콜백함수의 동기 처리</title>
+  </head>
+  <body>
+    <script>
+      setTimeout(() => {
+        setTimeout(() => {
+          console.log("todo: Second work!");
+        }, 2000);
+        console.log("todo: First work!");
+      }, 3000);
+
+      // 비동기작업을 동기작업처럼 실행시키고 싶다면 위처럼 '콜백함수'를 이용해 비동기 작업을 동기적으로 처리해주어야 함
+    </script>
+  </body>
+</html>

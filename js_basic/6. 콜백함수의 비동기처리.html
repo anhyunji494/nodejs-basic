@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>콜백 함수의 비동기 처리</title>
+  </head>
+  <body>
+    <script>
+      setTimeout(() => {
+        // 내장함수 setTimeout(callback, delayTime)
+        console.log("todo: First work!");
+      }, 3000);
+
+      setTimeout(() => {
+        console.log("todo: Second work!");
+      });
+
+      // setTimeout 함수는 순차적으로 처리되지 않기 때문에 <비동기> 작업이라고 함
+    </script>
+  </body>
+</html>

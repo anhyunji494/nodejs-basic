@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>12. Promise 객체와 async/await</title>
+  </head>
+  <body>
+    <script>
+      // async/await를 사용하는 이유
+      // 1. new Promise로 Promise 객체를 선언하고 resolve, reject를 넘겨주는 부분을 숨김 => Promise를 사용하는 것보다 코드 양이 훨씬 줄어듦
+      // 2. try/catch를 통해 오류를 다루고, 중첩 현상을 해결할 수 있음
+
+      function workP(sec) {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve(new Date().toISOString());
+          }, sec * 1000);
+        });
+      }
+
+      function justFunc() {
+        return "just Function";
+      }
+
+      async function asyncFunc() {
+        return "async Function";
+      }
+
+      console.log(justFunc()); // 일반함수 => 적어준 문자열 반환
+      console.log(asyncFunc()); // Promise로 구현된 함수 => Promise 객체 반환
+      console.log(workP()); // async를 사용한 함수 => Promise 객체 반환
+    </script>
+  </body>
+</html>

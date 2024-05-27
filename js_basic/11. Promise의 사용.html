@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Promise의 사용</title>
+  </head>
+  <body>
+    <script>
+      function workP(sec) {
+        // Promise의 인스턴스를 반환하고
+        // them에서 반환한 것을 받는다
+        return new Promise((resolve, reject) => {
+          // Promise 생성시 넘기는 callback = resolve, reject
+          // resolve 동작 완료시 호출, 오류 났을 경우 reject
+          setTimeout(() => {
+            resolve(new Date().toISOString());
+          }, sec * 1000);
+        });
+      }
+
+      workP(1)
+        .then((result) => {
+          console.log("첫번째 작업", result);
+          return workP(1);
+        })
+        .then((result) => {
+          console.log("두번째 작업", result);
+        });
+
+      // workP 함수는 new 키워드를 통해 Promise의 인스턴스를 생성해서 반환
+      // 인스턴스 : 코드에 구현된 객체가 실제 메모리에 할당된 것
+      // Promise를 생성할 때 resolve와 reject를 넘기게 되는데
+      // resolve: 콜백 함수와 비슷한 것. workP의 요청 성공 => resolve 함수 호출, 실패 => reject 함수 호출
+      // 마지막 호출부 : workP를 호출하고 반환되는 Promise의 인스턴스를 넘겨받아 resolve를 통해 받은 결과 값을 사용
+
+      // then() => Chaining을 해서 사용할 수 있음
+      // 이를 이용해 callback을 순차적으로 지정해 비동기 처리
+      // 첫번째 then()에서, 두번째 then()에서 받고 싶은 결과값을 반환 => 두번째 then()에서 이를 받음  => 첫번째 then()이 반드시 끝나고 무언가를 반환해야 => 다음 then()에서 받은 결과로 무언가를 실행 할 수 있음 => then()을 붙인 순서대로 처리
+    </script>
+  </body>
+</html>
